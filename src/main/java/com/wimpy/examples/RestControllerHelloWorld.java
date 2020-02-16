@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RestControllerHelloWorld {
 
-  @GetMapping("/")
+  @GetMapping("/timing")
   @Timing
   public void testingTimingOnMethod() {
     System.out.println("hello world");
