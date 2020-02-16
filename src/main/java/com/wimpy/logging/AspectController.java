@@ -20,8 +20,8 @@ public class AspectController {
   private static final Logger logger = LoggerFactory.getLogger(AspectController.class);
 
   /*
-      Methods with this annotation will be timing
-   */
+     Methods with this annotation will be timed
+  */
 
   @Around("@annotation(com.wimpy.logging.annotations.Timing)")
   public Object timingMethod(ProceedingJoinPoint pjp) {
@@ -57,5 +57,18 @@ public class AspectController {
 
     logger.info("Method name={},time={}{}", method.getName(), time, unit);
     return answer;
+  }
+
+  @Around("@annotation(com.wimpy.logging.annotations.HandelUnknownExceptions)")
+  public Object handelUnknownExceptions(ProceedingJoinPoint pjp) {
+
+    try {
+      return pjp.proceed();
+    } catch (Throwable e) {
+      logger.error("Exception was not handled [type={};message={}]", e.getClass(),e.getMessage());
+    }
+
+    // If result needs to be return rather return null (dont want to crash)
+    return null;
   }
 }
