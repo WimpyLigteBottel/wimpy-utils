@@ -1,17 +1,24 @@
 package com.wimpy.logging;
 
+import com.google.gson.Gson;
 import com.wimpy.logging.annotations.Timing;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Aspect
 @Configuration
@@ -62,13 +69,51 @@ public class AspectController {
   @Around("@annotation(com.wimpy.logging.annotations.HandelUnknownExceptions)")
   public Object handelUnknownExceptions(ProceedingJoinPoint pjp) {
 
+    Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+    Parameter[] parameters = method.getParameters();
+
     try {
       return pjp.proceed();
     } catch (Throwable e) {
-      logger.error("Exception was not handled [type={};message={}]", e.getClass(),e.getMessage());
+      logger.error("Exception was not handled [type={};message={}]", e.getClass(), e.getMessage());
+      logMethodParameters(pjp);
     }
 
     // If result needs to be return rather return null (dont want to crash)
     return null;
+  }
+
+  final class ParameterType implements Serializable {
+    private final String variableName;
+    private final Object value;
+    private final String type;
+
+    ParameterType(String variableName, String type, Object value) {
+      this.variableName = variableName;
+      this.type = type;
+      this.value = value;
+    }
+  }
+
+  @Before("@annotation(com.wimpy.logging.annotations.LogMethodParameters)")
+  public void logMethodParameters(JoinPoint pjp) {
+
+    Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+
+    List<ParameterType> variables = new ArrayList<>();
+    Object[] args = pjp.getArgs();
+
+    for (int i = 0; i < method.getParameters().length; i++) {
+      ParameterType parameter =
+          new ParameterType(
+              method.getParameters()[i].getName(),
+              method.getParameters()[i].getType().toString(),
+              args[i]);
+
+      variables.add(parameter);
+    }
+
+    logger.info(
+        "Method details [name={};parameters={}]", method.getName(), new Gson().toJson(variables));
   }
 }

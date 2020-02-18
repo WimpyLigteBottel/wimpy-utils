@@ -35,6 +35,11 @@
             <artifactId>spring-aspects</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
 
         <!--Used for aspect orientated programming&ndash;&gt;-->
         <dependency>
@@ -42,19 +47,19 @@
             <artifactId>spring-aop</artifactId>
         </dependency>
 
-        <!--Setup basic config database connections-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+<!--        &lt;!&ndash;Setup basic config database connections&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
 
-        <!--The in mem database that i use-->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-            <version>1.4.200</version>
-        </dependency>
+<!--        &lt;!&ndash;The in mem database that i use&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.h2database</groupId>-->
+<!--            <artifactId>h2</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--            <version>1.4.200</version>-->
+<!--        </dependency>-->
 
 
         <!-- used in unit testing my code -->
