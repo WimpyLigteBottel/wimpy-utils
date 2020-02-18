@@ -1,8 +1,8 @@
 package com.wimpy.examples;
 
-import com.wimpy.logging.annotations.HandelUnknownExceptions;
-import com.wimpy.logging.annotations.LogMethodParameters;
-import com.wimpy.logging.annotations.Timing;
+import com.wimpy.aop.annotations.HandelUnknownExceptions;
+import com.wimpy.aop.annotations.LogMethodParameters;
+import com.wimpy.aop.annotations.Timing;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
