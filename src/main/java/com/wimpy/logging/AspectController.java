@@ -8,9 +8,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
+import org.tinylog.Logger;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -23,8 +22,6 @@ import java.util.List;
 @Aspect
 @Configuration
 public class AspectController {
-
-  private static final Logger logger = LoggerFactory.getLogger(AspectController.class);
 
   /*
      Methods with this annotation will be timed
@@ -41,7 +38,7 @@ public class AspectController {
     try {
       answer = pjp.proceed();
     } catch (Throwable throwable) {
-      logger.error(throwable.getMessage());
+      Logger.error(throwable.getMessage());
     }
 
     Object time = null;
@@ -62,7 +59,7 @@ public class AspectController {
         break;
     }
 
-    logger.info("Method name={},time={}{}", method.getName(), time, unit);
+    Logger.info("Method name={},time={}{}", method.getName(), time, unit);
     return answer;
   }
 
@@ -75,7 +72,7 @@ public class AspectController {
     try {
       return pjp.proceed();
     } catch (Throwable e) {
-      logger.error("Exception was not handled [type={};message={}]", e.getClass(), e.getMessage());
+      Logger.error("Exception was not handled [type={};message={}]", e.getClass(), e.getMessage());
       logMethodParameters(pjp);
     }
 
@@ -113,7 +110,7 @@ public class AspectController {
       variables.add(parameter);
     }
 
-    logger.info(
+    Logger.info(
         "Method details [name={};parameters={}]", method.getName(), new Gson().toJson(variables));
   }
 }
