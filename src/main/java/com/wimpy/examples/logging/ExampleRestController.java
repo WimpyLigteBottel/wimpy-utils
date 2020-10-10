@@ -1,4 +1,4 @@
-package com.wimpy.examples;
+package com.wimpy.examples.logging;
 
 import com.wimpy.aop.annotations.HandelUnknownExceptions;
 import com.wimpy.aop.annotations.LogMethodParameters;

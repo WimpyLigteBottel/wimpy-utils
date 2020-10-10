@@ -1,4 +1,4 @@
-package com.wimpy.examples;
+package com.wimpy.examples.logging;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
