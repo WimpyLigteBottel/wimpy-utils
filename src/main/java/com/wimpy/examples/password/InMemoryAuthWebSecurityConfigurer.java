@@ -27,21 +27,22 @@ class InMemoryAuthWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/anonymous*").anonymous()
-                .antMatchers("/login*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .logout()
-                .deleteCookies("JSESSIONID");
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/anonymous*").anonymous()
+//                .antMatchers("/login*").permitAll()
+//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
+//                .and()
+//                .formLogin()
+//                .and()
+//                .logout()
+//                .deleteCookies("JSESSIONID")
+        ;
 
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -49,6 +50,6 @@ class InMemoryAuthWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(30);
+        return new BCryptPasswordEncoder(10);
     }
 }
