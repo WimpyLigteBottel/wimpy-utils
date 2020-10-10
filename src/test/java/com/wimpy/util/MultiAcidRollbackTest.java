@@ -1,5 +1,8 @@
 package com.wimpy.util;
 
+import com.wimpy.util.acid.AcidRollback;
+import com.wimpy.util.acid.MultiAcidRollback;
+import com.wimpy.util.acid.Result;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -43,7 +46,6 @@ public class MultiAcidRollbackTest {
         assertThat(actual.isSuccess()).isFalse();
         assertThat(actual.isRollbackSuccess()).isTrue();
     }
-
 
 
     private AcidRollback working() {

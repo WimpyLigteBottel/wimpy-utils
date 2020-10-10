@@ -1,5 +1,6 @@
-package com.wimpy.util;
+package com.wimpy.util.acid;
 
+import com.wimpy.util.Retry;
 import org.tinylog.Logger;
 
 import java.util.Optional;

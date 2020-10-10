@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 
 public class Retry {
 
-  // Takes a function and executes it, if fails, passes the function to the retry command
   public static Object run(int retries, Supplier function) {
     try {
       return function.get();

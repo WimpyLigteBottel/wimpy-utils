@@ -1,8 +1,8 @@
-package com.wimpy.util;
+package com.wimpy.util.acid;
 
 import java.util.Optional;
 
-class Result {
+public class Result {
   private boolean success;
   private Optional<Object> value;
   private boolean rollbackSuccess;

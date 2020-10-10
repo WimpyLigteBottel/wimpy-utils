@@ -1,5 +1,7 @@
 package com.wimpy.util;
 
+import com.wimpy.util.acid.AcidRollback;
+import com.wimpy.util.acid.Result;
 import org.junit.Test;
 
 import java.util.function.Supplier;
