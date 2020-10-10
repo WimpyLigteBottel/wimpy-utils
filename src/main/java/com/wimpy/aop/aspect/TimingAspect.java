@@ -11,6 +11,10 @@ import java.time.Instant;
 
 public class TimingAspect {
 
+  /*
+  Logs out the specified <TimeUnit.java> of how long method took to complete
+   */
+
   public static Object handle(ProceedingJoinPoint pjp) {
     MethodSignature signature = (MethodSignature) pjp.getSignature();
     Method method = signature.getMethod();
@@ -42,7 +46,7 @@ public class TimingAspect {
         break;
     }
 
-    Logger.info("Method name={},time={}{}", method.getName(), time, unit);
+    Logger.debug("Method name={},time={}{}", method.getName(), time, unit);
     return answer;
   }
 }

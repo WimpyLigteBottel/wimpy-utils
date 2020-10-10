@@ -1,49 +1,29 @@
 package com.wimpy.examples;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SampleClass {
 
-    String name;
-    String value;
-    LocalDateTime now;
+  private String name;
+  private String value;
+  private String now;
 
-    public SampleClass(String name, String value, LocalDateTime now) {
-        this.name = name;
-        this.value = value;
-        this.now = now;
-    }
+  public SampleClass(String name, String value, LocalDateTime now) {
+    this.name = name;
+    this.value = value;
+    this.now = now.format(DateTimeFormatter.ISO_DATE_TIME);
+  }
 
-    @Override
-    public String toString() {
-        return "SampleClass{" +
-                "name='" + name + '\'' +
-                ", value='" + value + '\'' +
-                ", now=" + now +
-                '}';
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getValue() {
+    return value;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public LocalDateTime getNow() {
-        return now;
-    }
-
-    public void setNow(LocalDateTime now) {
-        this.now = now;
-    }
+  public String getNow() {
+    return now.toString();
+  }
 }

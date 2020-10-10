@@ -17,7 +17,7 @@
 
     <dependencies>
 
-        <!-- helps with debugging and reloading application -->
+        <!--helps with debugging and reloading application -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -35,6 +35,8 @@
             </exclusions>
         </dependency>
 
+
+        <!--Logging framework&ndash;&gt;-->
         <dependency>
             <groupId>org.tinylog</groupId>
             <artifactId>tinylog-api</artifactId>
@@ -53,6 +55,8 @@
             <artifactId>spring-aspects</artifactId>
         </dependency>
 
+
+        <!--This is used to transform object in to json objects-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -65,7 +69,7 @@
             <artifactId>spring-aop</artifactId>
         </dependency>
 
-        <!--        &lt;!&ndash;Setup basic config database connections&ndash;&gt;-->
+        <!--Setup basic config database connections-->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.boot</groupId>-->
         <!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
@@ -80,20 +84,9 @@
         <!--        </dependency>-->
 
 
-        <!-- used in unit testing my code -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Used with unit testing to mock out code-->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.19</version>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
 

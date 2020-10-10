@@ -35,7 +35,7 @@ public class ExampleRestController {
 
   @GetMapping("/methodResponse")
   @LogResponse
-  public ResponseEntity<SampleClass> methodLogging() {
+  public ResponseEntity<SampleClass> methodResponse() {
 
     return ResponseEntity.ok(
         new SampleClass("randomName", String.valueOf(1020323), LocalDateTime.now()));
