@@ -1,6 +1,7 @@
 package com.wimpy.examples.db;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class DatabaseExample {
 
     private final DatabaseExampleCrudDao databaseExampleCrudDao;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public DatabaseExample(DatabaseExampleCrudDao databaseExampleCrudDao) {
+    public DatabaseExample(DatabaseExampleCrudDao databaseExampleCrudDao, PasswordEncoder passwordEncoder) {
         this.databaseExampleCrudDao = databaseExampleCrudDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -35,7 +38,7 @@ public class DatabaseExample {
 
         User user = new User();
         user.setUsername(name);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
 
         if (!databaseExampleCrudDao.findById(name).isPresent()) {
             databaseExampleCrudDao.save(user);
@@ -51,11 +54,11 @@ public class DatabaseExample {
     @GetMapping("/db/find")
     public ResponseEntity<User> find(@RequestParam String name) {
 
-        Optional<User> byId = databaseExampleCrudDao.findById(name);
+        Optional<User> user = databaseExampleCrudDao.findById(name);
 
 
-        if (byId.isPresent()) {
-            return ResponseEntity.ok(byId.get());
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
         }
 
         return ResponseEntity.notFound().build();
