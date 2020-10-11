@@ -44,10 +44,7 @@ public class ExampleRestController {
   @GetMapping("/superLog")
   @LogResponse
   @LogMethodParameters
-  public ResponseEntity<SampleClass> superLogging(
-      @RequestParam(required = false, defaultValue = "message") String first,
-      @RequestParam(required = false, defaultValue = "1") Integer second,
-      @RequestParam(required = false, defaultValue = "true") Boolean third) {
+  public ResponseEntity<SampleClass> superLogging() {
 
     return ResponseEntity.ok(
         new SampleClass("randomName", String.valueOf(1020323), LocalDateTime.now()));

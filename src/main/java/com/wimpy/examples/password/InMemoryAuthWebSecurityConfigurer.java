@@ -21,6 +21,7 @@ class InMemoryAuthWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("user2").password(passwordEncoder().encode("user2")).roles("USER")
                 .and()
+                //Below is encryped via bcrypt so that password is not in the clear
                 .withUser("admin").password("$2a$10$BIeqbsxfrUaBnKt/uRmKcenDTGd5mrkb8V7zoZ9Eef.F1zwunjzI2").roles("ADMIN");
 
 
