@@ -2,6 +2,7 @@ package com.wimpy.examples.db;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.tinylog.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Time;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class DatabaseExampleDao {
@@ -35,6 +37,25 @@ public class DatabaseExampleDao {
                 ps.executeBatch();
             }
         });
+
+    }
+
+
+    public void massPasswordUpdate() {
+        List<User> users = entityManager.createQuery("select u from User u", User.class)
+                .getResultList();
+
+
+        List<String> usernames = users.stream().map(User::getUsername).collect(Collectors.toList());
+
+        int count = entityManager.createQuery("Update User u "
+                + " SET u.password = 'updated' "
+                + " WHERE u.username in (:usernames)")
+                .setParameter("usernames", usernames)
+                .executeUpdate();
+
+        Logger.info("massPasswordUpdate() modified [count={}]", count);
+
 
     }
 }

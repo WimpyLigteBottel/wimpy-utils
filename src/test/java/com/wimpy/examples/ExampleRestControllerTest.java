@@ -39,6 +39,6 @@ public class ExampleRestControllerTest {
 
     @Test
     public void superLogging() {
-        exampleRestController.superLogging("frst", 2, false);
+        exampleRestController.superLogging();
     }
 }

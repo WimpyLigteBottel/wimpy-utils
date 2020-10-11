@@ -138,4 +138,29 @@ public class DatabaseExample {
         return ResponseEntity.notFound().build();
 
     }
+
+
+    @GetMapping("/db/findAll")
+    @Timing
+    public ResponseEntity<List<User>> findAll() {
+
+        List<User> users = new ArrayList<>();
+
+        databaseExampleCrudDao.findAll().forEach(users::add);
+
+
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/db/update")
+    @Transactional
+    @Timing
+    public ResponseEntity<User> updatePasswords() {
+
+        databaseExampleDao.massPasswordUpdate();
+
+
+        return ResponseEntity.ok().build();
+
+    }
 }
