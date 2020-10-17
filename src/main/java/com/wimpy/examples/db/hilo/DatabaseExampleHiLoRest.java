@@ -29,7 +29,6 @@ public class DatabaseExampleHiLoRest {
     public void generateRandomItem() {
 
         Item item = new Item();
-//        item.setId(ThreadLocalRandom.current().nextLong(1, 1000000));
         item.setItemName(UUID.randomUUID().toString());
         double randomValue = ThreadLocalRandom.current().nextDouble(0, 100);
         item.setPrice(BigDecimal.valueOf(randomValue));
@@ -46,7 +45,6 @@ public class DatabaseExampleHiLoRest {
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
             Item item = new Item();
-//        item.setId(ThreadLocalRandom.current().nextLong(1, 1000000));
             item.setItemName(UUID.randomUUID().toString());
             double randomValue = ThreadLocalRandom.current().nextDouble(0, 100);
             item.setPrice(BigDecimal.valueOf(randomValue));
