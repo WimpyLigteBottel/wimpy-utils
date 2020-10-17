@@ -1,4 +1,4 @@
-package com.wimpy.examples.db;
+package com.wimpy.examples.db.basic;
 
 import com.wimpy.aop.annotations.Timing;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.tinylog.Logger;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,9 +30,6 @@ public class DatabaseExample {
     }
 
 
-
-
-
     /*
     For creating rather use post method but for each of access i am
     going to use GET call
@@ -44,16 +40,14 @@ public class DatabaseExample {
      */
 
     @GetMapping("/db/create")
+    @Transactional
     public ResponseEntity<Object> createUserInTable(@RequestParam String name, @RequestParam String password) throws URISyntaxException {
 
         User user = new User();
         user.setUsername(name);
         user.setPassword(passwordEncoder.encode(password));
 
-        if (!databaseExampleCrudDao.findById(name).isPresent()) {
-            databaseExampleCrudDao.save(user);
-            Logger.info("user created!");
-        }
+        databaseExampleCrudDao.save(user);
 
 
         URI location = new URI("/db/find");
@@ -66,28 +60,26 @@ public class DatabaseExample {
     @Timing
     public ResponseEntity<Object> createUserInTableV1() {
 
-        List<User> users = new ArrayList<>();
-        for (int i = 0; i < 9999; i++) {
-            User e = new User();
-            e.setUsername(i + "");
-            e.setPassword(i + "");//technically i should encode the password but i not doing it to save time
-            e.setInserted(new Date());
-            e.setUpdated(new Date());
-            users.add(e);
-        }
 
-        databaseExampleDao.batchInsert(users);
+        databaseExampleDao.batchInsert(batchOfUsers());
 
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/db/creates/v2")
-    @Transactional
-    @Timing
-    public ResponseEntity<Object> createUserInTableV2() {
+    private List<User> batchOfUsers() {
 
         List<User> users = new ArrayList<>();
-        for (int i = 10001; i < 20000; i++) {
+
+        Optional<User> lastUser = databaseExampleDao.findLastUser();
+
+        int min = 0;
+        if (lastUser.isPresent()) {
+            min += lastUser.get().getId();
+        }
+
+        int max = min + 9999;
+
+        for (int i = min; i < max; i++) {
             User e = new User();
             e.setUsername(i + "");
             e.setPassword(i + "");//technically i should encode the password but i not doing it to save time
@@ -96,39 +88,14 @@ public class DatabaseExample {
             users.add(e);
         }
 
-        databaseExampleCrudDao.saveAll(users);
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/db/creates/v3")
-    @Transactional
-    @Timing
-    public ResponseEntity<Object> createUserInTableV3() {
-
-        List<User> users = new ArrayList<>();
-        for (int i = 20001; i < 30000; i++) {
-            User e = new User();
-            e.setUsername(i + "");
-            e.setPassword(i + "");//technically i should encode the password but i not doing it to save time
-            e.setInserted(new Date());
-            e.setUpdated(new Date());
-            users.add(e);
-        }
-
-
-        users.forEach(user -> {
-            databaseExampleCrudDao.save(user);
-        });
-
-        return ResponseEntity.noContent().build();
+        return users;
     }
 
 
     @GetMapping("/db/find")
     public ResponseEntity<User> find(@RequestParam String name) {
 
-        Optional<User> user = databaseExampleCrudDao.findById(name);
+        Optional<User> user = databaseExampleDao.find(name);
 
 
         if (user.isPresent()) {
@@ -138,7 +105,6 @@ public class DatabaseExample {
         return ResponseEntity.notFound().build();
 
     }
-
 
     @GetMapping("/db/findAll")
     @Timing
